@@ -1,0 +1,126 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Chat de {{ user.name }}</title>
+    <style>
+        body {
+            background-color: green;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        .chat-container {
+            background-color: white;
+            border-radius: 20px;
+            width: 400px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .chat-header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .chat-header img {
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            margin-right: 10px;
+        }
+
+        .chat-header h2 {
+            margin: 0;
+        }
+        .chat-header a{
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .chat-friends {
+            list-style: none;
+            padding: 0;
+            margin: 0
+        }
+
+        .chat-friends li {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+            position: relative;
+        }
+        .chat-friends li img {
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            margin-right: 10px;
+        }
+        .username{
+            margin: 0;
+        }
+        .chat-friends li .friend-info {
+            display: flex;
+            align-items: center;
+        }
+
+        .unread-messages {
+            background-color: rgb(68, 248, 23);
+            color: white;
+            border-radius: 50%;
+            padding: 5px;
+            width: 15px;
+            height: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        .friend-info p, h3{
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="chat-container">
+        <div class="chat-header">
+            <a href="{% url 'user' user.id %}">
+                <img src="{{ user.pic.url }}" alt="Foto de perfil de {{ user.name }}">
+                <div class="details-prof">
+                    <h2>{{ user.name }}</h2>
+                    <p class="username">@{{ user.user }}</p>
+            </a>
+            </div>
+        </div>
+        <ul class="chat-friends">
+            {% for friend in frnd %}
+            <li>
+                <div class="friend-info">
+                    <a href="{% url 'user' friend.id %}">
+                        <img src="{{ friend.pic.url }}" alt="Foto de perfil de {{ friend.name }}">
+                    </a>
+                    
+                    <div>
+                        <h3>{{ friend.name }}</h3>
+                        <p>How are you today</p>
+                    </div>
+                </div>
+                <div class="unread-messages">2</div>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+</html>

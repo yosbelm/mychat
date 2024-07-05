@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+    .user-details {
+            border-radius: 20px;
+            padding: 20px;
+            text-align: center;
+            margin-top: 20px; /* Para un pequeño margen entre el header y los detalles del user */
+        }
+
+        .user-details img {
+            border-radius: 50%;
+            width: 100px;
+            height: 100px;
+            margin-bottom: 20px;
+        }
+
+        .user-details h2 {
+            margin: 0;
+            font-size: 1.5em;
+        }
+
+        .user-details h3 {
+            margin: 5px 0;
+            font-size: 1.2em;
+            color: gray;
+        }
+
+        .user-details p {
+            font-size: 0.9em;
+            color: #666;
+        }
+</style>
+<div class="chat-container">
+
+    <div class="user-details">
+        <img src="{{ user.pic.url }}" alt="Foto de perfil de {{ user.name }}">
+        <h2>{{ user.name }}</h2>
+        <h3>@{{ user.user }}</h3>
+        <p>"{{ user.about }}"</p>
+    </div>
+</div>
+{% endblock %}
