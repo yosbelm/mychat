@@ -52,19 +52,20 @@
             background-color: #d1e7dd;
         }
 
-        .chat-footer {
+        
+        .chat-footer{
             display: flex;
+            justify-content: center;
             align-items: center;
         }
-
-        .chat-footer input[type="text"] {
-            flex: 1;
-            padding: 10px;
-            border: 1px solid #ccc;
+        .form {
+            
+            
             border-radius: 10px;
+            
         }
 
-        .chat-footer button {
+        .submit {
             padding: 10px 15px;
             border: none;
             border-radius: 10px;
@@ -94,10 +95,17 @@
                 </div>
             </div>
         </div>
-        <div class="chat-footer">
-            <input type="text" placeholder="Escribe tu mensaje...">
-            <button>Send</button>
-        </div>
+        
+            <form method="POST" class="chat-footer">
+                <div class="form">
+                    {% csrf_token %}
+                    {{ form.body }}
+                </div>
+                <button class='submit' type="submit">Send</button>
+            </form>
+        
     </div>
-    
-    {% endblock %}
+        
+{% endblock %}
+            
+            

@@ -91,6 +91,10 @@
         .friend-info p, h3{
             margin: 0;
         }
+        .friend-info a{
+            text-decoration: none;
+            color: inherit;
+        }
     </style>
 </head>
 <body>
@@ -104,23 +108,26 @@
             </a>
             </div>
         </div>
-        <ul class="chat-friends">
-            {% for friend in frnd %}
-            <li>
-                <div class="friend-info">
-                    <a href="{% url 'user' friend.id %}">
-                        <img src="{{ friend.pic.url }}" alt="Foto de perfil de {{ friend.name }}">
-                    </a>
-                    
-                    <div>
-                        <h3>{{ friend.name }}</h3>
-                        <p>How are you today</p>
+        
+            <ul class="chat-friends">
+                {% for friend in frnd %}
+                <li>
+                    <div class="friend-info">
+                        <a href="{% url 'user' friend.id %}">
+                            <img src="{{ friend.pic.url }}" alt="Foto de perfil de {{ friend.name }}">
+                        </a>
+                        <a href="{% url 'actualchat' user.id friend.id %}">
+                            <div>
+                                <h3>{{ friend.name }}</h3>
+                                <p>How are you today</p>
+                            </div>
+                        </a>
                     </div>
-                </div>
-                <div class="unread-messages">2</div>
-            </li>
-            {% endfor %}
-        </ul>
+                    <div class="unread-messages">2</div>
+                </li>
+                {% endfor %}
+            </ul>
+        
     </div>
 </body>
 </html>
