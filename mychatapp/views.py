@@ -3,7 +3,7 @@ from .models import Profile, ChatMessage
 from .forms import MessageForm
 
 # Create your views here.
-def index(request, id):
+def user_details(request, id):
     user = Profile.objects.get(id=id)
     context = {'user': user}
     return render(request,  'index.html', context)

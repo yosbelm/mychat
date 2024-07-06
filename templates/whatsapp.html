@@ -100,7 +100,7 @@
 <body>
     <div class="chat-container">
         <div class="chat-header">
-            <a href="{% url 'user' user.id %}">
+            <a href="{% url 'user_details' user.id %}">
                 <img src="{{ user.pic.url }}" alt="Foto de perfil de {{ user.name }}">
                 <div class="details-prof">
                     <h2>{{ user.name }}</h2>
@@ -113,7 +113,7 @@
                 {% for friend in frnd %}
                 <li>
                     <div class="friend-info">
-                        <a href="{% url 'user' friend.id %}">
+                        <a href="{% url 'user_details' friend.id %}">
                             <img src="{{ friend.pic.url }}" alt="Foto de perfil de {{ friend.name }}">
                         </a>
                         <a href="{% url 'actualchat' user.id friend.id %}">
