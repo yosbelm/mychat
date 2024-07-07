@@ -3,20 +3,30 @@
 
 {% block content %}
     <style>
-        .chat-header {
+        .chat-header{
             display: flex;
-            justify-content: center;
+            justify-content: left;
+        }
+        .chat-header img{
+            width: 50px;
+            height: 30px;
+        }
+        .chat-header-photo {
+            display: flex;
+            justify-content: right;
             margin-bottom: 10px;
         }
 
-        .chat-header img {
+        .chat-header-photo img {
             border-radius: 50%;
             width: 50px;
             height: 50px;
             margin-right: 10px;
         }
 
-        .chat-header h2 {
+        .chat-header-photo h2 {
+            display: flex;
+            align-items: center;
             margin: 0;
         }
         .chat-body {
@@ -26,6 +36,7 @@
             border-top: 1px solid #eee;
             border-bottom: 1px solid #eee;
             margin-bottom: 20px;
+            max-height: 320px;
         }
 
         .message {
@@ -79,21 +90,30 @@
 <body>
     <div class="chat-container">
         <div class="chat-header">
-            <img src="{{ user.pic.url }}" >
-            <h2>{{ user.name }}</h2>
+            <a href="{% url 'chatting' user.id %}">
+                <img src="{% static '/flecha.png' %}">
+            </a>
+            <div class="chat-header-photo">
+                <img src="{{ friend.pic.url }}" >
+                <h2>{{ friend.name }}</h2>
+            </div>
         </div>
         <div class="chat-body">
             <!-- Ejemplo de mensajes -->
+            {% for chat_send_box in mensaje_sent %}
             <div class="message sent">
                 <div class="message-content">
-                    {{ chat_send }}
+                    {{ chat_send_box }}
                 </div>
             </div>
+            {% endfor %}
+            {% for chat_receive_box in mensaje_received %}
             <div class="message received">
                 <div class="message-content">
-                    {{ chat_receive }}
+                    {{ chat_receive_box }}
                 </div>
             </div>
+            {% endfor %}
         </div>
         
             <form method="POST" class="chat-footer">
@@ -107,5 +127,9 @@
     </div>
         
 {% endblock %}
+                
+                    
+                    
             
             
+                

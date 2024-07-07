@@ -1,4 +1,5 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.http import HttpResponseRedirect
 from .models import Profile, ChatMessage
 from .forms import MessageForm
 
@@ -18,9 +19,32 @@ def chatting(request, id):
 
 def chat_screen(request, id, r_id):
     user = Profile.objects.get(id=id)
-    chat_send = ChatMessage.objects.get(sender_id = id)
-    chat_receive = ChatMessage.objects.get(sender_id = r_id)
+    user_receiver = Profile.objects.get(id = r_id)
+    mensaje_sent = []
+    mensaje_received = []
+    chat_send = ChatMessage.objects.filter(sender_id = id)
+    chat_receive = ChatMessage.objects.filter(sender_id = r_id)
+    # messages = ChatMessage.objects.all()
+    for message in chat_send:
+        if message.sender.id==user.id and message.receiver.id==user_receiver.id:
+            mensaje_sent.append(message.body)
+            
+            print(message.sender.id, message.receiver.id, mensaje_sent)
+            
+    print('*******************************************')
+    for message in chat_receive:
+        if message.receiver.id==user.id and message.sender.id==user_receiver.id:
+            mensaje_received.append(message.body)
+            
+            print(message.sender.id, message.receiver.id, mensaje_received)
+                
     frnd = user.friend.all()
-    form = MessageForm()
-    context ={'user': user, 'form': form, 'frnd': frnd, 'chat_send': chat_send, 'chat_receive': chat_receive}
+    friend = user.friend.get(id= r_id)
+
+    if request.method == 'POST':
+        form = ChatMessage.objects.create(body=request.POST['body'], sender=user,receiver=user_receiver, seen=False)
+        return redirect('actualchat', id, r_id)
+    else:
+        form = MessageForm()
+    context ={'user': user, 'form': form, 'frnd': frnd, 'mensaje_sent': mensaje_sent, 'mensaje_received': mensaje_received, 'chat_send': chat_send, 'chat_receive': chat_receive, 'friend':friend}
     return render(request, 'actualchat.html', context)
