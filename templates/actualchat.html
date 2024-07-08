@@ -215,9 +215,9 @@ document.addEventListener('DOMContentLoaded', function() {
             console.log('Success:', data);
 
             data.forEach(msg => {
-                if (!lastMessageId || msg.id > lastMessageId) {  // Verificar que el mensaje es nuevo
+                if (!lastMessageId || msg.id > lastMessageId) {
                     addMessageToChat(msg.body, 'message-received');
-                    lastMessageId = msg.id;  // Actualizar el último ID de mensaje recibido
+                    lastMessageId = msg.id;
                 }
             });
         })
@@ -231,5 +231,5 @@ document.addEventListener('DOMContentLoaded', function() {
                     
             
             
-    {% endblock %}
+{% endblock %}
                 

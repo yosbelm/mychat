@@ -10,6 +10,7 @@ def user_details(request, id):
     context = {'user': user}
     return render(request,  'index.html', context)
 
+
 def chatting(request, id):
     user = Profile.objects.get(id=id)
     frnd = user.friend.all()
@@ -82,15 +83,13 @@ def sentMessages(request, id, r_id):
     respuesta = {'mensaje': final_msg.body, 'usuario_id': id, 'receptor_id': r_id}
     return JsonResponse(respuesta, safe=False)
 
+
 def receiveMessages(request, id, r_id):
     user = Profile.objects.get(id=id)
     user_receiver = Profile.objects.get(id = r_id)
     
     final_msg = ChatMessage.objects.filter(sender=user_receiver, receiver=user, seen=False).order_by('id')
-    
-    # Crear lista de mensajes con id y body
     recibidos = [{'id': msg.id, 'body': msg.body} for msg in final_msg]
     
-   
     final_msg.update(seen=True)
     return JsonResponse(recibidos, safe=False)
