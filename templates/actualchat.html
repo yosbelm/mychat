@@ -193,7 +193,42 @@
                 console.error('Error al enviar los datos:', error);
             });
     };
+
     
+    setInterval(receiveChat, 2000) 
+    let lastMessageCount = 0;
+
+    
+    function receiveChat(){
+
+        let url = "{% url 'received_msg' user.id friend.id %}"
+        fetch(url) 
+        .then(response => response.json())            
+        .then(data =>  {
+            console.log('Success:', data);
+
+            if (data.length > lastMessageCount) { // Solo agregar nuevos mensajes
+            let chat_body = document.querySelector('.chat-body');
+            for (let i = lastMessageCount; i < data.length; i++) {
+                let chatmessageBox = document.createElement('div');
+                chatmessageBox.classList.add('message-received');
+
+                let messageContent = document.createElement('div');
+                messageContent.classList.add('message-content-r');
+                messageContent.innerText = data[i];
+
+                chatmessageBox.appendChild(messageContent);
+                chat_body.append(chatmessageBox);
+                }
+                chat_body.scrollTop = chat_body.scrollHeight; // Para desplazar hacia el último mensaje
+                lastMessageCount = data.length; // Actualizar el conteo de mensajes recibidos
+            }    
+                            
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    }
  </script>
                     
                     

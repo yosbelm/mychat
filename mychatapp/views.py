@@ -13,10 +13,19 @@ def user_details(request, id):
 def chatting(request, id):
     user = Profile.objects.get(id=id)
     frnd = user.friend.all()
-    # f = frnd.
-    # print(f)
     context = {'user': user, 'frnd': frnd}
     return render(request,  'whatsapp.html', context)
+
+def unreadMessagesCount(request, user_id):
+    user = Profile.objects.get(id=user_id)
+    friends = Profile.objects.exclude(id=user_id)  # Todos menos el usuario actual
+    unread_counts = []
+
+    for friend in friends:
+        count = ChatMessage.objects.filter(sender=friend, receiver=user, seen=False).count()
+        unread_counts.append({'friend_id': friend.id, 'unread_count': count})
+
+    return JsonResponse(unread_counts, safe=False)
 
 
 def chat_screen(request, id, r_id):
@@ -31,14 +40,9 @@ def chat_screen(request, id, r_id):
         if message.sender.id==user.id and message.receiver.id==user_receiver.id:
             mensaje_sent.append(message.body)
             
-            print(message.sender.id, message.receiver.id, mensaje_sent)
-            
-    print('*******************************************')
     for message in chat_receive:
         if message.receiver.id==user.id and message.sender.id==user_receiver.id:
             mensaje_received.append(message.body)
-            
-            print(message.sender.id, message.receiver.id, mensaje_received)
                 
     frnd = user.friend.all()
     friend = user.friend.get(id= r_id)
@@ -62,4 +66,16 @@ def sentMessages(request, id, r_id):
     
     respuesta = {'mensaje': final_msg.body, 'usuario_id': id, 'receptor_id': r_id}
     return JsonResponse(respuesta, safe=False)
+
+def receiveMessages(request, id, r_id):
+    user = Profile.objects.get(id=id)
+    user_receiver = Profile.objects.get(id = r_id)
     
+    recibidos = []
+    final_msg = ChatMessage.objects.filter(sender=user_receiver,receiver=user)
+    for msg in final_msg:
+        recibidos.append(msg.body)
+        print(msg)
+   
+    final_msg.update(seen=True)
+    return JsonResponse(recibidos, safe=False)

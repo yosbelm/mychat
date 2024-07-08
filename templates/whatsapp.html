@@ -111,7 +111,7 @@
         
             <ul class="chat-friends">
                 {% for friend in frnd %}
-                <li>
+                <li  data-friend-id="{{ friend.id }}">
                     <div class="friend-info">
                         <a href="{% url 'user_details' friend.id %}">
                             <img src="{{ friend.pic.url }}" alt="Foto de perfil de {{ friend.name }}">
@@ -123,11 +123,38 @@
                             </div>
                         </a>
                     </div>
-                    <div class="unread-messages">2</div>
+                    <div class="unread-messages">0</div>
                 </li>
                 {% endfor %}
             </ul>
         
     </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+    updateUnreadCounts();
+
+    setInterval(updateUnreadCounts, 5000); // Actualizar cada 5 segundos
+
+    function updateUnreadCounts() {
+        const url = "{% url 'unread_messages_count' user.id %}";
+
+        fetch(url)
+        .then(response => response.json())
+        .then(data => {
+            data.forEach(friend => {
+                const unreadElement = document.querySelector(`.chat-friends li[data-friend-id="${friend.friend_id}"] .unread-messages`);
+                if (unreadElement) {
+                    unreadElement.innerText = friend.unread_count >= 0 ? friend.unread_count : '';
+                }
+            });
+        })
+        .catch(error => {
+            console.error('Error al actualizar los contadores de mensajes:', error);
+        });
+    }
+});
+</script>
 </body>
+
 </html>
