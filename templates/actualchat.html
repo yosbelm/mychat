@@ -103,19 +103,20 @@
         </div>
         <div class="chat-body">
             
-            {% for chat_send_box in mensaje_sent %}
-            <div class="message-sent">
-                <div class="message-content">
-                    {{ chat_send_box }}
-                </div>
-            </div>
-            {% endfor %}
-            {% for chat_receive_box in mensaje_received %}
-            <div class="message-received">
-                <div class="message-content-r">
-                    {{ chat_receive_box }}
-                </div>
-            </div>
+            {% for chat in combined_chats %}
+                {% if chat.sender.id == user.id %}
+                    <div class="message-sent">
+                        <div class="message-content">
+                            {{ chat.body }}
+                        </div>
+                    </div>
+                {% else %}
+                    <div class="message-received">
+                        <div class="message-content-r">
+                            {{ chat.body }}
+                        </div>
+                    </div>
+                {% endif %}
             {% endfor %}
         </div>
         
