@@ -13,8 +13,22 @@ def user_details(request, id):
 def chatting(request, id):
     user = Profile.objects.get(id=id)
     frnd = user.friend.all()
-    context = {'user': user, 'frnd': frnd}
+    
+    friends = Profile.objects.exclude(id=id)
+    
+    last_msg = []
+    nnm = "No new message"
+    for f in friends:
+        messages = ChatMessage.objects.filter(receiver=user, sender=f)
+        if len(messages) == 0:
+            last_msg.append({'friend_id': f.id, 'mensaje': nnm})
+        else:
+            ultimo = len(messages) - 1
+            last_msg.append({'friend_id': f.id, 'mensaje': messages[ultimo]})
+    print(last_msg)
+    context = {'user': user, 'frnd': frnd, 'last_msg': last_msg}
     return render(request,  'whatsapp.html', context)
+
 
 def unreadMessagesCount(request, user_id):
     user = Profile.objects.get(id=user_id)
@@ -54,6 +68,7 @@ def chat_screen(request, id, r_id):
         form = MessageForm()
     context ={'user': user, 'form': form, 'frnd': frnd, 'mensaje_sent': mensaje_sent, 'mensaje_received': mensaje_received, 'chat_send': chat_send, 'chat_receive': chat_receive, 'friend':friend}
     return render(request, 'actualchat.html', context)
+
 
 
 def sentMessages(request, id, r_id):

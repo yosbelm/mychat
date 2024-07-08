@@ -119,7 +119,11 @@
                         <a href="{% url 'actualchat' user.id friend.id %}">
                             <div>
                                 <h3>{{ friend.name }}</h3>
-                                <p>How are you today</p>
+                                {% for m in last_msg %}
+                                    {% if m.friend_id == friend.id %}
+                                        <p>{{ m.mensaje }}</p>
+                                    {% endif %}
+                                {% endfor %}
                             </div>
                         </a>
                     </div>
@@ -128,13 +132,13 @@
                 {% endfor %}
             </ul>
         
-    </div>
+    </div> 
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
     updateUnreadCounts();
 
-    setInterval(updateUnreadCounts, 5000); // Actualizar cada 5 segundos
+    setInterval(updateUnreadCounts, 5000);
 
     function updateUnreadCounts() {
         const url = "{% url 'unread_messages_count' user.id %}";
