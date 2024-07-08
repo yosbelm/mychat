@@ -39,28 +39,31 @@
             max-height: 320px;
         }
 
-        .message {
-            display: flex;
-            margin-bottom: 10px;
-        }
+       
 
-        .message.sent {
+        .message-sent{
+            display: flex;
             justify-content: flex-end;
         }
 
-        .message.received {
+        .message-received {
+            display: flex;
             justify-content: flex-start;
         }
 
-        .message-content {
+        .message-content, .message-content-r {
+            display: flex;
+            justify-content: flex-end;
             max-width: 70%;
             padding: 10px;
             border-radius: 10px;
-            background-color: #f1f1f1;
+            background-color: #a5a2a2;
+            margin-bottom: 5px;
         }
 
-        .message.sent .message-content {
-            background-color: #d1e7dd;
+        .message-content {
+            background-color: #aadac4;
+            
         }
 
         
@@ -99,37 +102,102 @@
             </div>
         </div>
         <div class="chat-body">
-            <!-- Ejemplo de mensajes -->
+            
             {% for chat_send_box in mensaje_sent %}
-            <div class="message sent">
+            <div class="message-sent">
                 <div class="message-content">
                     {{ chat_send_box }}
                 </div>
             </div>
             {% endfor %}
             {% for chat_receive_box in mensaje_received %}
-            <div class="message received">
-                <div class="message-content">
+            <div class="message-received">
+                <div class="message-content-r">
                     {{ chat_receive_box }}
                 </div>
             </div>
             {% endfor %}
         </div>
         
-            <form method="POST" class="chat-footer">
+            <form method="POST" class="chat-footer" id="myform">
                 <div class="form">
                     {% csrf_token %}
                     {{ form.body }}
                 </div>
-                <button class='submit' type="submit">Send</button>
+                <button id="submit" class='submit' type="submit">Send</button>
             </form>
         
     </div>
         
-{% endblock %}
+ <script>
+    function getCookie(name){
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== ''){
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++){
+                const cookie = cookies[i].trim();
                 
+                if (cookie.substring(0, name.length + 1) === (name + '=')){
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                };
+            };
+        };
+        return cookieValue;
+    };
+    const csrftoken = getCookie('csrftoken')
+
+
+    let form = document.getElementById('myform')
+    form.addEventListener("submit", sendChat)
+
+    function sendChat(e){
+        e.preventDefault()
+        let chatMessage = document.getElementById('id_body').value
+
+        console.log(chatMessage)
+        const data = {msg: chatMessage};
+        const url = "{% url 'sent_msg' user.id friend.id %}"
+
+        fetch(url, {  
+                method: 'POST',                           
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': csrftoken  
+                },
+                body: JSON.stringify(data)                
+            })
+            .then(response => response.json())            
+            .then(data => {
+                console.log('Respuesta del servidor:', data);
+
+                if(data.mensaje){
+                let chat_body = document.querySelector('.chat-body')
+                let chatmessageBox = document.createElement('div')
+                chatmessageBox.classList.add('message-sent')
+
+                let messageContent = document.createElement('div');
+                messageContent.classList.add('message-content');
+                messageContent.innerText = data.mensaje;
+
+                chatmessageBox.appendChild(messageContent);
+                chat_body.append(chatmessageBox);
+                }
+                else{
+                    console.error('Error:', data.error);
+                }
+
+                document.getElementById('id_body').value = '';
+            })
+            .catch(error => {
+                console.error('Error al enviar los datos:', error);
+            });
+    };
+    
+ </script>
                     
                     
             
             
+    {% endblock %}
                 

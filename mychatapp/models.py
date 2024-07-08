@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.utils import timezone
+
 
 # Create your models here.
 class Profile(models.Model):
@@ -25,6 +27,9 @@ class ChatMessage(models.Model):
     sender = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='receiver')
     receiver = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='sender')
     seen = models.BooleanField(default=False)
+    pub_date = models.DateTimeField(default=timezone.now)
     
     def __str__(self):
         return self.body
+    
+    
