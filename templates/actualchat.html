@@ -57,12 +57,15 @@
             max-width: 70%;
             padding: 10px;
             border-radius: 10px;
-            background-color: #a5a2a2;
             margin-bottom: 5px;
         }
 
         .message-content {
             background-color: #aadac4;
+            
+        }
+        .message-content-r {
+            background-color: #a5a2a2;
             
         }
 
@@ -73,10 +76,7 @@
             align-items: center;
         }
         .form {
-            
-            
             border-radius: 10px;
-            
         }
 
         .submit {
@@ -147,9 +147,11 @@
     };
     const csrftoken = getCookie('csrftoken')
 
-
+document.addEventListener('DOMContentLoaded', function() {
     let form = document.getElementById('myform')
     form.addEventListener("submit", sendChat)
+
+    let lastMessageId = null;
 
     function sendChat(e){
         e.preventDefault()
@@ -171,19 +173,9 @@
             .then(data => {
                 console.log('Respuesta del servidor:', data);
 
-                if(data.mensaje){
-                let chat_body = document.querySelector('.chat-body')
-                let chatmessageBox = document.createElement('div')
-                chatmessageBox.classList.add('message-sent')
-
-                let messageContent = document.createElement('div');
-                messageContent.classList.add('message-content');
-                messageContent.innerText = data.mensaje;
-
-                chatmessageBox.appendChild(messageContent);
-                chat_body.append(chatmessageBox);
-                }
-                else{
+                if (data.mensaje) {
+                    addMessageToChat(data.mensaje, 'message-sent');
+                } else {
                     console.error('Error:', data.error);
                 }
 
@@ -194,41 +186,46 @@
             });
     };
 
+    function addMessageToChat(message, messageType) {
+        let chat_body = document.querySelector('.chat-body');
+        let chatmessageBox = document.createElement('div');
+        chatmessageBox.classList.add(messageType);
+
+        let messageContent = document.createElement('div');
+        if (messageType === 'message-received') {
+            messageContent.classList.add('message-content-r');
+        } else {
+            messageContent.classList.add('message-content');
+        }
+        messageContent.innerText = message;
+
+        chatmessageBox.appendChild(messageContent);
+        chat_body.append(chatmessageBox);
+        chat_body.scrollTop = chat_body.scrollHeight;
+    }
     
     setInterval(receiveChat, 2000) 
     let lastMessageCount = 0;
 
-    
     function receiveChat(){
-
         let url = "{% url 'received_msg' user.id friend.id %}"
         fetch(url) 
         .then(response => response.json())            
         .then(data =>  {
             console.log('Success:', data);
 
-            if (data.length > lastMessageCount) { // Solo agregar nuevos mensajes
-            let chat_body = document.querySelector('.chat-body');
-            for (let i = lastMessageCount; i < data.length; i++) {
-                let chatmessageBox = document.createElement('div');
-                chatmessageBox.classList.add('message-received');
-
-                let messageContent = document.createElement('div');
-                messageContent.classList.add('message-content-r');
-                messageContent.innerText = data[i];
-
-                chatmessageBox.appendChild(messageContent);
-                chat_body.append(chatmessageBox);
+            data.forEach(msg => {
+                if (!lastMessageId || msg.id > lastMessageId) {  // Verificar que el mensaje es nuevo
+                    addMessageToChat(msg.body, 'message-received');
+                    lastMessageId = msg.id;  // Actualizar el último ID de mensaje recibido
                 }
-                chat_body.scrollTop = chat_body.scrollHeight; // Para desplazar hacia el último mensaje
-                lastMessageCount = data.length; // Actualizar el conteo de mensajes recibidos
-            }    
-                            
+            });
         })
         .catch(error => {
             console.error('Error:', error);
         });
     }
+});
  </script>
                     
                     

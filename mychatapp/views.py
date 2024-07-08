@@ -17,7 +17,7 @@ def chatting(request, id):
     friends = Profile.objects.exclude(id=id)
     
     last_msg = []
-    nnm = "No new message"
+    nnm = "No messages"
     for f in friends:
         messages = ChatMessage.objects.filter(receiver=user, sender=f)
         if len(messages) == 0:
@@ -86,11 +86,11 @@ def receiveMessages(request, id, r_id):
     user = Profile.objects.get(id=id)
     user_receiver = Profile.objects.get(id = r_id)
     
-    recibidos = []
-    final_msg = ChatMessage.objects.filter(sender=user_receiver,receiver=user)
-    for msg in final_msg:
-        recibidos.append(msg.body)
-        print(msg)
+    final_msg = ChatMessage.objects.filter(sender=user_receiver, receiver=user, seen=False).order_by('id')
+    
+    # Crear lista de mensajes con id y body
+    recibidos = [{'id': msg.id, 'body': msg.body} for msg in final_msg]
+    
    
     final_msg.update(seen=True)
     return JsonResponse(recibidos, safe=False)
