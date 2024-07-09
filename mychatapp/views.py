@@ -6,6 +6,11 @@ import json
 from itertools import chain
 
 # Create your views here.
+def authentication(request, user, password):
+    pass
+
+
+
 def user_details(request, id):
     user = Profile.objects.get(id=id)
     context = {'user': user}
