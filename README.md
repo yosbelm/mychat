@@ -13,6 +13,7 @@ This Django-based chat application offers the following features:
 - Brief user descriptions shown upon clicking profile pictures.
 
 ## Technologies Used
+- Python
 - Django
 - JavaScript (for real-time messaging)
 - HTML/CSS
