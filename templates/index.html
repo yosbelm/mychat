@@ -3,14 +3,7 @@
 
 {% block content %}
 <style>
-        .chat-header{
-            display: flex;
-            justify-content: start;
-        }
-        .chat-header img{
-            width: 25px;
-            height: 25px;
-        }
+        
         .user-details {
             border-radius: 20px;
             padding: 20px;
@@ -42,9 +35,6 @@
         }
 </style>
 <div class="chat-container">
-    <a class="chat-header" href="{% url 'chatting' user.id %}">
-        <img src="{% static '/flecha.png' %}">
-    </a>
     <div class="user-details">
         <img src="{{ user.pic.url }}" alt="Foto de perfil de {{ user.name }}">
         <h2>{{ user.name }}</h2>
@@ -52,4 +42,4 @@
         <p>"{{ user.about }}"</p>
     </div>
 </div>
-{% endblock %}
+{% endblock %} 
