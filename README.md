@@ -24,8 +24,8 @@ Follow these steps to set up the project on your local machine:
 
 1. **Clone the repository:**
     ```bash
-    git clone https://github.com/yourusername/django-chat-app.git
-    cd django-chat-app
+    git clone https://github.com/yosbelm/mychat.git
+    cd mychat
     ```
 
 2. **Create and activate a virtual environment (optional but recommended):**
