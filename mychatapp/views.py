@@ -1,15 +1,40 @@
 from django.shortcuts import render, redirect
 from .models import Profile, ChatMessage
-from .forms import MessageForm
+from .forms import MessageForm, AuthForm
 from django.http import JsonResponse
 import json
 from itertools import chain
 
+
+
 # Create your views here.
-def authentication(request, user, password):
-    pass
+def authentication(request):
+    if request.method == 'POST':
+        form = AuthForm(data=request.POST)
+        if form.is_valid():
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password')
+            
+            user_exists = Profile.objects.filter(name=username).exists()
+            password_correct = Profile.objects.filter(name=username, password=password).exists()
 
-
+            if user_exists and password_correct:
+                user = Profile.objects.get(name=username, password=password)
+                id = user.pk
+                return redirect('chatting', id=id)
+            else:
+                if not user_exists:
+                    form.add_error('username', 'El nombre de usuario es incorrecto.')
+                elif not password_correct:
+                    form.add_error('password', 'La contraseña es incorrecta.')
+        else:
+            form.add_error(None, 'Datos no válidos.')
+    else:
+        form = AuthForm()
+    return render(request, 'autenticacion.html', {'form': form})
+                
+                
+                
 
 def user_details(request, id):
     user = Profile.objects.get(id=id)
