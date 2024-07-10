@@ -1,4 +1,4 @@
-# Django Chat Application
+# Django Chat App
 
 ## Project Description
 
