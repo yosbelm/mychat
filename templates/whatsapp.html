@@ -149,7 +149,7 @@
             data.forEach(friend => {
                 const unreadElement = document.querySelector(`.chat-friends li[data-friend-id="${friend.friend_id}"] .unread-messages`);
                 if (unreadElement) {
-                    unreadElement.innerText = friend.unread_count >= 0 ? friend.unread_count : '';
+                    unreadElement.innerText = friend.unread_count > 0 ? friend.unread_count : '';
                 }
             });
         })
