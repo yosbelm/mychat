@@ -5,11 +5,16 @@
 This project is built with Django, utilizing some JavaScript for real-time messaging functionalities, and HTML/CSS for the frontend.
 
 This Django-based chat application offers the following features:
-• Simple authentication/login system.
-• Automatic sending and receiving of messages.
-• Messages displayed in chronological order.
-• Unread message count for each chat.
-• Display of the last sent message in each chat.
+• Simple authentication/login system.  
+
+• Automatic sending and receiving of messages.  
+
+• Messages displayed in chronological order.  
+
+• Unread message count for each chat.  
+
+• Display of the last sent message in each chat.  
+
 • Brief user descriptions shown upon clicking profile pictures.
 
 ## Technologies Used
