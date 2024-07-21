@@ -1,5 +1,5 @@
 <div style="display: flex; justify-content: center; align-items: center; height: 100vh; width: 10vw;">
-  <img src="https://yosbel.pages.dev/assets/myChat-Bm_YKV5_.jpeg" alt="Screenshot 1.png" style="width: 60%; margin: 0 10px;">
+  <img src="https://yosbel.pages.dev/assets/myChat-Bm_YKV5_.jpeg" alt="Chat picture" style="width: 60%; display: flex; justify-content: center; align-items: center;">
 </div>
 
 
