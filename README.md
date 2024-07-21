@@ -4,7 +4,7 @@
 
 This project is built with Django, utilizing some JavaScript for real-time messaging functionalities, and HTML/CSS for the frontend.
 
-This Django-based chat application offers the following features:
+This Django-based chat application offers the following features:  
 • Simple authentication/login system.  
 
 • Automatic sending and receiving of messages.  
