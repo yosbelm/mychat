@@ -108,11 +108,19 @@ To access the admin panel:
 
 ```plaintext
 mychat/
-│
-├── chat/
+├── chatapp/
 │   ├── migrations/
 │   ├── static/
+│   │   ├── css/
+│   │   │   └── styles.css
+│   │   ├── images/
+│   │   │   └── logo.png
+│   │   └── js/
+│   │       └── scripts.js
 │   ├── templates/
+│   │   ├── chat/
+│   │   │   └── room.html
+│   │   └── base.html
 │   ├── __init__.py
 │   ├── admin.py
 │   ├── apps.py
@@ -120,9 +128,10 @@ mychat/
 │   ├── models.py
 │   ├── routing.py
 │   ├── tests.py
+│   ├── urls.py
 │   └── views.py
 │
-├── chat_project/
+├── chatproject/
 │   ├── __init__.py
 │   ├── asgi.py
 │   ├── settings.py
