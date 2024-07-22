@@ -132,3 +132,32 @@ mychat/
 ├── db.sqlite3
 ├── manage.py
 └── requirements.txt
+
+
+## Contributing
+
+### We welcome contributions! Please follow these steps:
+
+1. Fork the repository.
+2. Create a new branch:
+    ```sh
+    git checkout -b feature-branch
+    ```
+3. Commit your changes:
+    ```sh
+    git commit -am 'Add new feature'
+    ```
+4. Push to the branch:
+    ```sh
+    git push origin feature-branch
+    ```
+5. Create a new Pull Request.  
+
+
+
+## References
+[Django Documentation](https://docs.djangoproject.com/en/5.0/)  
+
+[Django Admin Interface](https://docs.djangoproject.com/en/5.0/ref/contrib/admin/)  
+
+[Django Models](https://docs.djangoproject.com/en/5.0/topics/db/models/)
