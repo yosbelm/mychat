@@ -25,7 +25,8 @@
 ### Prerequisites
 
 - Python 3.x
-- Django 3.x
+- Django 3.x  
+- SQLite (default database)
 
 ### Steps
 
