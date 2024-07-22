@@ -5,69 +5,87 @@
 
 # Django Chat App
 
-## Project Description
 
-This project is built with Django, utilizing some JavaScript for real-time messaging functionalities, and HTML/CSS for the frontend.
+## Project Overview
 
-This Django-based chat application offers the following features:  
-• Simple authentication/login system.  
+**Django Chat App** is a Django-based chat application designed to facilitate real-time messaging. The project showcases Django's capabilities in handling real-time communication, user authentication, and a user-friendly interface.
 
-• Automatic sending and receiving of messages.  
+## Table of Contents
 
-• Messages displayed in chronological order.  
+1. [Installation](#installation)
+2. [Usage](#usage)
+3. [Features](#features)
+4. [Project Structure](#project-structure)
+5. [Contributing](#contributing)
+6. [License](#license)
+7. [References](#references)
 
-• Unread message count for each chat.  
+## Installation
 
-• Display of the last sent message in each chat.  
+### Prerequisites
 
-• Brief user descriptions shown upon clicking profile pictures.
+- Python 3.x
+- Django 3.x
 
-## Technologies Used
-- Python
-- Django
-- JavaScript (for real-time messaging)
-- HTML/CSS
-
-## Installation and Setup
-
-Follow these steps to set up the project on your local machine:
+### Steps
 
 1. **Clone the repository:**
-    ```bash
+
+    ```sh
     git clone https://github.com/yosbelm/mychat.git
     cd mychat
     ```
 
 2. **Create and activate a virtual environment (optional but recommended):**
-    ```bash
+
+    ```sh
     virtualenv venv
     source venv/bin/activate   # On Windows use `venv\Scripts\activate`
     ```
 
 3. **Install the required packages:**
-    ```bash
+
+    ```sh
     pip install -r requirements.txt
     ```
 
 4. **Apply database migrations:**
-    ```bash
+
+    ```sh
     python manage.py migrate
     ```
 
 5. **Create a superuser (for accessing the admin interface):**
-    ```bash
+
+    ```sh
     python manage.py createsuperuser
     ```
 
 6. **Run the development server:**
-    ```bash
+
+    ```sh
     python manage.py runserver
     ```
 
 7. **Access the application:**
+
     Open your web browser and navigate to `http://127.0.0.1:8000`.
 
 ## Usage
+
+### Admin Panel
+
+To access the admin panel:
+
+1. Create a superuser:
+
+    ```sh
+    python manage.py createsuperuser
+    ```
+
+2. Log in to the admin panel at `http://127.0.0.1:8000/admin`.
+
+### Using the Chat App
 
 1. **Register or log in:**
     - Register a new user or log in with an existing account.
@@ -77,10 +95,40 @@ Follow these steps to set up the project on your local machine:
     - Click on profile pictures to view user descriptions.
     - Monitor unread message counts and see the latest messages in each chat.
 
-## Contributing
+## Features
 
-Feel free to submit issues and pull requests for improvements or bug fixes. Contributions are welcome!
+- Simple authentication/login system.
+- Automatic sending and receiving of messages.
+- Messages displayed in chronological order.
+- Unread message count for each chat.
+- Display of the last sent message in each chat.
+- Brief user descriptions shown upon clicking profile pictures.
 
-## License
+## Project Structure
 
-This project is licensed under the MIT License. See the `LICENSE` file for details.
+```plaintext
+mychat/
+│
+├── chat/
+│   ├── migrations/
+│   ├── static/
+│   ├── templates/
+│   ├── __init__.py
+│   ├── admin.py
+│   ├── apps.py
+│   ├── consumers.py
+│   ├── models.py
+│   ├── routing.py
+│   ├── tests.py
+│   └── views.py
+│
+├── chat_project/
+│   ├── __init__.py
+│   ├── asgi.py
+│   ├── settings.py
+│   ├── urls.py
+│   └── wsgi.py
+│
+├── db.sqlite3
+├── manage.py
+└── requirements.txt
