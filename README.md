@@ -140,7 +140,8 @@ mychat/
 │
 ├── db.sqlite3
 ├── manage.py
-└── requirements.txt
+└── requirements.txt  
+
 
 
 ## Contributing
